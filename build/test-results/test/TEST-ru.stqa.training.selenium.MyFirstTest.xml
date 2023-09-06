@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.stqa.training.selenium.MyFirstTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-09-06T18:27:43" hostname="DESKTOP-J4EBG7Q" time="5.698">
+  <properties/>
+  <testcase name="myFirstTest()" classname="ru.stqa.training.selenium.MyFirstTest" time="5.698"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+Starting ChromeDriver 116.0.5845.96 (1a391816688002153ef791ffe60d9e899a71a037-refs/branch-heads/5845@{#1382}) on port 34810
+Only local connections are allowed.
+Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+ChromeDriver was started successfully.
+сент. 06, 2023 9:27:43 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
+сент. 06, 2023 9:27:43 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Falling back to original OSS JSON Wire Protocol.
+сент. 06, 2023 9:27:44 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+]]></system-err>
+</testsuite>
