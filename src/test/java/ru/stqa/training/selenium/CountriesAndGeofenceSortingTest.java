@@ -11,16 +11,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CountriesAndGeofenceSortingTest {
     private WebDriver driver;
-
-
     @BeforeAll
     public static void setupAll() {
         WebDriverManager.chromedriver().setup();
@@ -54,39 +51,41 @@ public class CountriesAndGeofenceSortingTest {
             countries.add(e.findElement(By.cssSelector("td:nth-child(5)")).getText());
         }
 
-        List<String> sorted = countries;
-        Collections.sort(sorted);
-        assertEquals(sorted, countries);
+        assertTrue(isSorted(countries));
     }
 
     @Test
     public void zonesAreSorted() {
-        List<WebElement> countries = new ArrayList<>();
         List<String> zones = new ArrayList<>();
-        List<WebElement> list = driver.findElements(By.cssSelector("#content tr.row"));
+        List<WebElement> list;
+        int count = driver.findElements(By.cssSelector("#content tr.row")).size();
 
-        for (WebElement e : list) {
-            if (!e.findElement(By.cssSelector("td:nth-child(6)")).getText().equals("0")) {
-                countries.add(e);
-            }
-        }
-
-
-
-        for (WebElement c : countries) {
-            list.clear();
-            c.findElement(By.cssSelector("td:nth-child(5) a")).click();
-            list = driver.findElements(By.cssSelector(".dataTable tr:not([class='header'])"));
-            for (WebElement zone : list) {
-                if (!zone.findElement(By.cssSelector("td:nth-child(3)")).getText().equals("")) {
-                    zones.add(zone.findElement(By.cssSelector("td:nth-child(3)")).getText());
+        for (int i = 0; i < count; i++) {
+            if (!driver.findElement(By.cssSelector("td:nth-child(6)")).getText().equals("0")) {
+                driver.findElement(By.cssSelector("td:nth-child(5) a")).click();
+                list = driver.findElements(By.cssSelector(".dataTable tr:not([class='header'])"));
+                for (WebElement zone : list) {
+                    if (!zone.findElement(By.cssSelector("td:nth-child(3)")).getText().equals("")) {
+                        zones.add(zone.findElement(By.cssSelector("td:nth-child(3)")).getText());
+                    }
                 }
+
+                assertTrue(isSorted(zones));
+                driver.navigate().back();
             }
-            List<String> sorted = zones;
-            Collections.sort(sorted);
-            assertEquals(sorted, zones);
-            driver.navigate().back();
         }
+    }
+
+    private boolean isSorted(List<String> list) {
+        String init = "";
+
+        for (final String current : list) {
+            if (current.compareTo(init) < 0)
+                return false;
+            init = current;
+        }
+
+        return true;
     }
 }
 
