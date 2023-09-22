@@ -49,29 +49,29 @@ public class IsGeofenceSortedTest {
 
         List<WebElement> list;
         int count = driver.findElements(By.cssSelector(".dataTable tr.row")).size();
-        for (int i = 1; i < count; i++) {
-            driver.findElement(By.cssSelector("tr:nth-child(2) td:nth-child(3) a")).click();
+        for (int i = 1; i <= count; i++) {
+            driver.findElement(By.cssSelector("tr:nth-child(" + (i + 1) + ") td:nth-child(3) a")).click();
             list = driver.findElements(By.cssSelector("#table-zones tr:not([class='header'])"));
             for (int j = 0; j < list.size() - 1; j++) {
-
-                zones.add(list.get(j).findElement(By.cssSelector("td:nth-child(3) select option")).getText());
-                System.out.println(list.get(j).findElement(By.cssSelector("td:nth-child(3) select option")).getAttribute("textContent"));
+                zones.add(list.get(j).findElement(By.cssSelector("select:not([class*='select2']) [selected='selected']")).getText());
             }
-            assertTrue(isSorted(zones));
-            driver.navigate().back();
 
+            assertTrue(isSorted(zones));
+            zones.clear();
+            driver.navigate().back();
         }
     }
 
     private boolean isSorted(List<String> list) {
+
         String init = "";
 
         for (final String current : list) {
-            if (current.compareTo(init) < 0)
+            if (current.compareTo(init) < 0) {
                 return false;
+            }
             init = current;
         }
-
         return true;
     }
 }
