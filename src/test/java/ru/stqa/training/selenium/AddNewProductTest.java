@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class AddNewProductTest {
     private WebDriver driver;
 
@@ -39,16 +41,16 @@ public class AddNewProductTest {
 
     @AfterEach
     public void teardown() {
-        // driver.quit();
+        driver.quit();
     }
 
     @Test
     public void addNewProduct() {
-
+        String name = "White Duck";
         driver.findElement(By.cssSelector("#content .button:nth-of-type(2)")).click();
 
         driver.findElement(By.cssSelector("#tab-general input[value='1']")).click();
-        driver.findElement(By.cssSelector("#tab-general input[name='name[en]']")).sendKeys("White Duck");
+        driver.findElement(By.cssSelector("#tab-general input[name='name[en]']")).sendKeys(name);
         driver.findElement(By.cssSelector("#tab-general input[name='code']")).sendKeys("RD005");
 
         driver.findElement(By.cssSelector("#tab-general [class='input-wrapper'] tr:nth-of-type(2) td")).click();
@@ -89,5 +91,6 @@ public class AddNewProductTest {
 
         driver.findElement(By.cssSelector("#content button[name='save']")).click();
 
+        assertEquals(name, driver.findElement(By.cssSelector("#content tr:nth-child(9) td:nth-child(3)")).getText());
     }
 }
