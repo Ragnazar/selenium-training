@@ -42,13 +42,12 @@ public class IsStickerExistsTest {
 
     @Test
     public void productHasSticker() throws Exception {
-        List<WebElement> list = driver.findElements(By.cssSelector(".products .link"));
+        List<WebElement> list = driver.findElements(By.cssSelector(".products [class='image-wrapper']"));
 
-        for (WebElement e:list) {
+        for (WebElement e : list) {
             List<WebElement> stickers = e.findElements(By.cssSelector(".sticker"));
-            System.out.println(e.findElement(By.cssSelector(".sticker")).getText());
-            assertTrue(existsElement(e,".sticker"));
-            if (stickers.size()>1){
+            assertTrue(existsElement(e, ".sticker"));
+            if (stickers.size() > 1) {
                 throw new Exception("The element have more than one sticker");
             }
         }
