@@ -8,14 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddNewProductTest {
     private WebDriver driver;
@@ -41,12 +44,12 @@ public class AddNewProductTest {
 
     @AfterEach
     public void teardown() {
-        driver.quit();
+        //driver.quit();
     }
 
     @Test
     public void addNewProduct() {
-        String name = "White Duck";
+        String name = "White Duck" + (int) (Math.random() * 1000);
         driver.findElement(By.cssSelector("#content .button:nth-of-type(2)")).click();
 
         driver.findElement(By.cssSelector("#tab-general input[value='1']")).click();
@@ -91,6 +94,19 @@ public class AddNewProductTest {
 
         driver.findElement(By.cssSelector("#content button[name='save']")).click();
 
-        assertEquals(name, driver.findElement(By.cssSelector("#content tr:nth-child(9) td:nth-child(3)")).getText());
+        List<WebElement> list = driver.findElements(By.cssSelector("#content tr[class='row'] td:nth-child(3)"));
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            names.add(list.get(i).getText());
+            System.out.println(names.get(i));
+        }
+        boolean check = names.contains(name);
+        assertTrue(check);
+
+        //Deleting the duck from products list
+//        driver.findElement(By.cssSelector("#content tr:nth-child(9) td:nth-child(1)")).click();
+//        driver.findElement(By.cssSelector("#content span[class='button-set'] button[name='delete']")).click();
+//        driver.switchTo().alert().accept();
+
     }
 }
