@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -155,27 +154,26 @@ public class CorrectProductPageOpensTest {
 
     @Test
     public void campaignPriceIsHigherThanRegular() {
-        Dimension expectedCampaignPriceSize = driver
+        int expectedCampaignPriceSize =Integer.parseInt(driver
                 .findElement(By.cssSelector("#box-campaigns [class = 'campaign-price']"))
-                .getSize();
-        Dimension expectedRegularPriceSize = driver
+                .getCssValue("font-size").substring(0,2));
+        int expectedRegularPriceSize =Integer.parseInt(driver
                 .findElement(By.cssSelector("#box-campaigns [class = 'regular-price']"))
-                .getSize();
-        boolean check = expectedCampaignPriceSize.height > expectedRegularPriceSize.height ||
-                        expectedCampaignPriceSize.width > expectedRegularPriceSize.width;
+                .getCssValue("font-size").substring(0,2));
+
+        boolean check = expectedCampaignPriceSize > expectedRegularPriceSize;
 
         assertTrue(check, "The size of Campaign price is not bigger than Regular price on main page");
 
         driver.findElement(By.cssSelector("#box-campaigns .product .link")).click();
 
-        Dimension actualCampaignPriceSize = driver
+        int actualCampaignPriceSize =Integer.parseInt(driver
                 .findElement(By.cssSelector(".content .information [class = 'campaign-price']"))
-                .getSize();
-        Dimension actualRegularPriceSize = driver
+                .getCssValue("font-size").substring(0,2));
+        int actualRegularPriceSize =Integer.parseInt(driver
                 .findElement(By.cssSelector(".content .information [class = 'regular-price']"))
-                .getSize();
-        check = actualCampaignPriceSize.height > actualRegularPriceSize.height ||
-                actualCampaignPriceSize.width > actualRegularPriceSize.width;
+                .getCssValue("font-size").substring(0,2));
+        check = actualCampaignPriceSize > actualRegularPriceSize;
 
         assertTrue(check, "The size of Campaign price is not bigger than Regular price on product page");
     }
