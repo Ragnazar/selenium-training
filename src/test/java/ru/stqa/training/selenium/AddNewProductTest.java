@@ -44,7 +44,7 @@ public class AddNewProductTest {
 
     @AfterEach
     public void teardown() {
-        //driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -96,9 +96,8 @@ public class AddNewProductTest {
 
         List<WebElement> list = driver.findElements(By.cssSelector("#content tr[class='row'] td:nth-child(3)"));
         List<String> names = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            names.add(list.get(i).getText());
-            System.out.println(names.get(i));
+        for (WebElement element : list) {
+            names.add(element.getText());
         }
         boolean check = names.contains(name);
         assertTrue(check);
