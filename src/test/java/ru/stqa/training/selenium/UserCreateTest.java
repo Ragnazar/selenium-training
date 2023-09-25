@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.training.selenium.utils.GenerateData;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +23,7 @@ public class UserCreateTest {
 
     @BeforeAll
     public static void setupAll() {
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
 
         genData = new GenerateData();
         password = genData.generateRandomAlphaNumeric(10);
@@ -31,7 +33,7 @@ public class UserCreateTest {
     @BeforeEach
     public void setUp() {
 
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         driver.get("http://localhost/litecart");
@@ -41,7 +43,7 @@ public class UserCreateTest {
 
     @AfterEach
     public void teardown() {
-        // driver.quit();
+         driver.quit();
     }
 
     @Test
@@ -66,7 +68,7 @@ public class UserCreateTest {
         driver.findElement(By.cssSelector(".content input[name='confirmed_password']"))
                 .sendKeys(password);
 
-        driver.findElement(By.cssSelector(".content .selection")).click();
+        driver.findElement(By.cssSelector(".content [class^='select2-selection']")).click();
         driver.findElement(By.cssSelector("input[type = 'search']")).sendKeys("United states", Keys.ENTER);
 
         driver.findElement(By.cssSelector(".content td select[name='zone_code']")).click();
