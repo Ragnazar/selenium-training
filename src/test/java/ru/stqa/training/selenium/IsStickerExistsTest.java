@@ -42,7 +42,7 @@ public class IsStickerExistsTest {
 
     @Test
     public void productHasSticker() throws Exception {
-        List<WebElement> list = driver.findElements(By.cssSelector(".products [class='image-wrapper']"));
+        List<WebElement> list = driver.findElements(By.cssSelector(".product"));
 
         for (WebElement e : list) {
             List<WebElement> stickers = e.findElements(By.cssSelector(".sticker"));
