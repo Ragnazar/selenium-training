@@ -23,13 +23,13 @@ public class AddProductToCustomersCartTest {
 
     @BeforeAll
     public static void setupAll() {
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
     }
 
     @BeforeEach
     public void setUp() {
 
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 10);
 
@@ -40,7 +40,7 @@ public class AddProductToCustomersCartTest {
 
     @AfterEach
     public void teardown() {
-        //driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -59,10 +59,13 @@ public class AddProductToCustomersCartTest {
 
         driver.findElement(By.cssSelector("#cart .link")).click();
         List<WebElement> list = driver.findElements(By.cssSelector(".dataTable td.item"));
+
+        WebElement item;
         try {
             for (int j = 1; j <= list.size(); j++) {
+                item = driver.findElement(By.cssSelector(".dataTable td"));
                 driver.findElement(By.cssSelector("#box-checkout-cart [name='remove_cart_item']")).click();
-                wait.until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector(".dataTable td"))));
+                wait.until(ExpectedConditions.stalenessOf(item));
             }
         } catch (TimeoutException e) {
             System.out.println("There are no items in your cart.");
