@@ -42,13 +42,13 @@ public class IsStickerExistsTest {
 
     @Test
     public void productHasSticker() throws Exception {
-        List<WebElement> list = driver.findElements(By.cssSelector("[class='product column shadow hover-light']"));
+        List<WebElement> list = driver.findElements(By.cssSelector(".product"));
 
-        for (WebElement e:list) {
-            List<WebElement> stickers = e.findElements(By.cssSelector("[class^='sticker']"));
-            assertTrue(existsElement(e,"[class^='sticker']"));
-            if (stickers.size()>1){
-                throw new Exception("The element have more than jne sticker");
+        for (WebElement e : list) {
+            List<WebElement> stickers = e.findElements(By.cssSelector(".sticker"));
+            assertTrue(existsElement(e, ".sticker"));
+            if (stickers.size() > 1) {
+                throw new Exception("The element have more than one sticker");
             }
         }
     }
@@ -56,6 +56,7 @@ public class IsStickerExistsTest {
     private boolean existsElement(WebElement element, String name) {
         try {
             element.findElement(By.cssSelector(name));
+
         } catch (NoSuchElementException e) {
             return false;
         }
