@@ -10,7 +10,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,13 +22,13 @@ public class AddProductToCustomersCartTest {
 
     @BeforeAll
     public static void setupAll() {
-        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
     public void setUp() {
 
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 10);
 
@@ -45,6 +44,12 @@ public class AddProductToCustomersCartTest {
 
     @Test
     public void productAddedToTheCart() {
+        addProductsToTheCart();
+        goToTheCart();
+        removeProductsFromTheCart();
+    }
+
+    private void addProductsToTheCart() {
         for (int i = 1; i <= 3; i++) {
             driver.findElement(By.cssSelector(".product a")).click();
             if (driver.findElement(By.cssSelector(".sku")).getText().equals("RD001")) {
@@ -56,8 +61,9 @@ public class AddProductToCustomersCartTest {
 
             driver.navigate().back();
         }
+    }
 
-        driver.findElement(By.cssSelector("#cart .link")).click();
+    private void removeProductsFromTheCart() {
         List<WebElement> list = driver.findElements(By.cssSelector(".dataTable td.item"));
 
         WebElement item;
@@ -70,5 +76,9 @@ public class AddProductToCustomersCartTest {
         } catch (TimeoutException e) {
             System.out.println("There are no items in your cart.");
         }
+    }
+
+    private void goToTheCart() {
+        driver.findElement(By.cssSelector("#cart .link")).click();
     }
 }
