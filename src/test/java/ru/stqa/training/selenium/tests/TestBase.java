@@ -16,7 +16,7 @@ public class TestBase {
     }
 
     @Before
-    public void start() {
+    public void setup() {
         if (tlApp.get() != null) {
             app = tlApp.get();
             return;

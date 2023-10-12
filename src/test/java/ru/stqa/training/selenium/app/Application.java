@@ -20,6 +20,7 @@ public class Application {
     private CartPage cartPage;
 
     public Application() {
+
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 5);
         shopPage = new ShopPage(driver);
@@ -44,6 +45,7 @@ public class Application {
             driver.navigate().back();
         }
     }
+
     public void removeProductsFromTheCart() {
         cartPage.open();
         List<WebElement> list = driver.findElements(By.cssSelector(".dataTable td.item"));
