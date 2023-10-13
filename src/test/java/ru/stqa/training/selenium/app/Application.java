@@ -61,6 +61,4 @@ public class Application {
             System.out.println("There are no items in your cart.");
         }
     }
-
-
 }
