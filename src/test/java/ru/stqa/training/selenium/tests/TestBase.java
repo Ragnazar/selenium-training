@@ -1,8 +1,8 @@
 package ru.stqa.training.selenium.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import ru.stqa.training.selenium.app.Application;
 
 public class TestBase {
@@ -15,7 +15,7 @@ public class TestBase {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         if (tlApp.get() != null) {
             app = tlApp.get();
